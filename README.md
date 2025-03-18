@@ -79,3 +79,6 @@ php artisan migrate:fresh --seed
 - http://127.0.0.1:8000/api/v1/customers?postalCode[gt]=30000&type=[eq]=1&includeInvoices=true
 - http://127.0.0.1:8000/api/v1/customers/1?includeInvoices=true
 - ...
+
+### Resource
+- https://youtu.be/YGqCZjdgJJk?si=c-LkCmIBw0DFsjzv 
