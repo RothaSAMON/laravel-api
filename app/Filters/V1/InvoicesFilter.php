@@ -2,22 +2,27 @@
 
 namespace App\Filters\V1;
 
-use Illuminate\Http\Request;
 use App\Filters\ApiFilter;
 
-class CustomersFilter extends ApiFilter {
+class InvoicesFilter extends ApiFilter {
+    // $table->integer('customer_id');
+    // $table->integer('amount');
+    // $table->string('status');
+    // $table->dateTime('billed_date');
+    // $table->dateTime('paid_date')->nullable();
+
     protected $safeParms = [
-        'name' => ['eq'],
-        'type' => ['eq'],
-        'email' => ['eq'],
-        'address' => ['eq'],
-        'city' => ['eq'],
-        'state' => ['eq'],
-        'postalCode' => ['eq', 'gt', 'lt'],
+        'customerId' => ['eq'],
+        'amount' => ['eq', 'lt', 'gt', 'lte', 'gte'],
+        'status' => ['eq', 'ne'],
+        'billtedDate' => ['eq', 'lt', 'gt', 'lte', 'gte'],
+        'paidDate' => ['eq', 'lt', 'gt', 'lte', 'gte'],
     ];
 
     protected $columnMap = [
-        'postalCode' => 'postal_code'
+        'customerId' => 'customer_id',
+        'billtedDate' => 'billed_date',
+        'paidDate' => 'paid_date,'
     ];
 
     protected $operatorMap = [
@@ -26,49 +31,6 @@ class CustomersFilter extends ApiFilter {
         'lte' => '<=',
         'gt' => '>',
         'gte' => '>=',
+        'ne' => '!='
     ];
-
-    // public function transform(Request $request) {
-    //     $eloQuery = [];
-
-    //     foreach ($this->safeParms as $parm => $operators) {
-    //         $query = $request->query($parm);
-
-    //         if (!isset($query)) {
-    //             continue;
-    //         }
-
-    //         $column = $this->columnMap($parm) ?? $parm;
-
-    //         foreach ($operators as $operators) {
-    //             if (isset($query[$operators])) {
-    //                 $eloQuery[] = [$column, $this->operatorMap($operators), $query[$operators]];
-    //             }
-    //         }
-    //     }
-    // } 
-
-    public function transform(Request $request) {
-        $eloQuery = [];
-
-        foreach ($this->safeParms as $parm => $operators) {
-            $query = $request->query($parm);
-
-            if (!isset($query)) {
-                continue;
-            }
-
-            // Use array instead of method call
-            $column = $this->columnMap[$parm] ?? $parm;
-
-            foreach ($operators as $operator) {
-                if (isset($query[$operator])) {
-                    // Use array instead of method call
-                    $eloQuery[] = [$column, $this->operatorMap[$operator], $query[$operator]];
-                }
-            }
-        }
-
-        return $eloQuery;
-    }
 }
