@@ -68,3 +68,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## This command : Re-run migration abd seeders
 
 php artisan migrate:fresh --seed
+
+## API endpoint
+- http://127.0.0.1:8000/api/v1/invoices
+- http://127.0.0.1:8000/api/v1/customers
+
+### Do the query with API endpoint
+
+- http://127.0.0.1:8000/api/v1/invoices?status[ne]=P
+- http://127.0.0.1:8000/api/v1/customers?postalCode[gt]=30000&type=[eq]=1&includeInvoices=true
+- http://127.0.0.1:8000/api/v1/customers/1?includeInvoices=true
+- ...
